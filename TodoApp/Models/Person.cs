@@ -6,5 +6,6 @@ namespace TodoApp.Models
 {
     class Person
     {
+        private int id;
     }
 }
