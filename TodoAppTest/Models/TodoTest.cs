@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TodoAppTest.Models
 {
-    class TotoTest
+    class TodoTest
     {
     }
 }
