@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TodoApp.Data
 {
-    class PersonSequencer
+    public class PersonSequencer
     {
         private static int personId = 0;
 
-        public static int NextPersonID()
+        public static int NextPersonId()
         {
             return ++personId;
         }
