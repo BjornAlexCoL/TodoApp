@@ -15,7 +15,7 @@ namespace TodoApp.Models
             this.id = id;
         }
         public Person(int id, string firstName, string lastName) : this(id)
-        {
+        {   
             FirstName = firstName;
             LastName = lastName;
         }
@@ -47,5 +47,9 @@ namespace TodoApp.Models
             }
         }
 
+        public string Name
+        {
+            get => $"{firstName} {lastName}";
+        }
     }
 }

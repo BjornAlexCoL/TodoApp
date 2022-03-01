@@ -63,5 +63,21 @@ namespace TodoAppTest.Models
             Assert.Equal(expected, resultTwo);
 
         }
+        [Theory]
+        [InlineData(1, "Björn", "Larsson", "Björn Larsson")]
+        [InlineData(1, "Björn", "",  "Björn ")]
+        [InlineData(1, "", "Larsson",  " Larsson")]
+        [InlineData(2, "Björn", "Larsson", "Björn Larsson")]
+        public void PersonNameTest(int id,string firstName,string lastName, string expected)
+        {
+            //Assign
+            Person person = new Person(id, firstName, lastName);
+
+            //Act
+            string result = person.Name;
+
+            //Assert
+            Assert.Equal(expected, result);
+        }
     }
 }
