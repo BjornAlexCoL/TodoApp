@@ -10,14 +10,14 @@ namespace TodoApp.Models
         private string firstName;
         private string lastName;
 
-        public Person(int id)
+        public Person(int id, string firstName, string lastName) 
         {
-            this.id = id;
-        }
-        public Person(int id, string firstName, string lastName) : this(id)
-        {   
-            FirstName = firstName;
-            LastName = lastName;
+            if ((!String.IsNullOrWhiteSpace(firstName)) && (!String.IsNullOrWhiteSpace(lastName)) || !(id < 0))
+            {
+                this.id = id;
+                this.firstName = firstName;
+                this.lastName = lastName;
+            }
         }
 
         public int Id
