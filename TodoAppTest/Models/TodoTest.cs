@@ -6,20 +6,32 @@ using Xunit;
 
 namespace TodoAppTest.Models
 {
-    class TodoTest
+    public class TodoTest
     {
+        [Fact]
         public void ToDoConstructorTest()
         {
             //Arrange
-            string description = "Create week1 Assignment";
-            bool done = false;
-
+            int id = 1;
+            string desc = "Meet on team";
             //Act
-            Todo result = new Todo(description, done);
-
+            Todo result = new Todo(id, desc);
             //Assert
+            Assert.Equal(id, result.Id);
+            Assert.Equal(desc, result.Description);
             Assert.NotNull(result);
-            Assert.Equal(description, result.Description);
         }
+        [Fact]
+        public void BadIdTest()
+        {
+         //Arrange
+            int id = 0;
+            string desc = "Organise work.";
+         //Act
+
+         //Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Todo(id, desc));
     }
+    }
+
 }
