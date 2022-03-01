@@ -29,9 +29,9 @@ namespace TodoApp.Models
             get => firstName;
             set
             {
-                if ((value != null) && (value != ""))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
-                    this.firstName = value;
+                    firstName = value;
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace TodoApp.Models
             get => lastName;
             set
             {
-                if ((value != null) && (value != ""))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     lastName = value;
                 }
