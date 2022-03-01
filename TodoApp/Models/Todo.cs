@@ -27,12 +27,13 @@ namespace TodoApp.Models
         { get => id; }
         public string Description
         {
-            get => description;
+            get { return description; }
             set
             {
-               if (string.IsNullOrWhiteSpace(value) || value.Length < 1)
+               if (string.IsNullOrWhiteSpace(value) || value.Length < 2)
                 {
-                   throw new ArgumentException("Description should not be blank.");
+                    throw new ArgumentException("Description should not be blank.");
+ //                   throw new Exception("Exception throwed");
                }
                description = value;
             }
