@@ -13,8 +13,16 @@ namespace TodoApp.Models
         private bool done;
         private Person assignee;
 
-        public Todo(int id, string description)
+        public Todo()
         {
+
+        }
+        public bool Done
+        {
+            get { return done; }
+        }
+
+        public Todo(int id, string description)        {
             if (id < 1)
             {
                 throw new ArgumentOutOfRangeException("The ToDo ID should not be less than 1");
@@ -22,6 +30,7 @@ namespace TodoApp.Models
 
             this.id = id;
             this.description = description;
+
         }
         public int Id
         { get => id; }
@@ -39,5 +48,12 @@ namespace TodoApp.Models
             }
         }
 
+
+        public Todo(int id, string description, bool done)
+        {
+            this.done = done;
+            this.id = id;
+            this.description = description;
+        }
     }// End Class Todo
 }
