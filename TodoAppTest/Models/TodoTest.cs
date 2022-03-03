@@ -21,27 +21,29 @@ namespace TodoAppTest.Models
         }
 
         [Fact]
-        public void BadDescriptionTest()
+        public void BadIDTest()
         {
             // Assign
             int id = 0;
             string desc = "Assign Job";
 
             // Act
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Todo(id, desc));
+            Assert.Throws<ArgumentException>(() => new Todo(id, desc));
             // Assert
         }
 
         [Fact]
-            public void BadDescriptionConstructorTest()
-            {
-            // Arrange
+            public void BadDescriptionTest()
+        {
+            // Assign
             int id = 1;
-            string desc = null;
-                // Act
+            string desc = " ";
 
-                Assert.Throws<ArgumentException>(() => new Todo(id, desc));
-            }
-    
+            // Act
+            Assert.Throws<ArgumentException>(() => new Todo(id, desc));
+            // Assert
+        }
+
+
     }// End of TodoTest Class
 }// End of NameSpace

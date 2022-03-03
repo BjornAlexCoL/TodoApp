@@ -1,4 +1,6 @@
 ﻿using System;
+using TodoApp.Models;
+using TodoApp.Data;
 
 namespace TodoApp
 {
@@ -7,6 +9,6 @@ namespace TodoApp
         static void Main(string[] args)
         {
 
-        }
-    }
-}
+        }// End of Main
+    }// End of Class Program
+}// End NameSpace
