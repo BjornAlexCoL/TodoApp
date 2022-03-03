@@ -8,46 +8,45 @@ namespace TodoApp.Models
     {
 
         private int id;
-
         private string description;
         private bool done;
-        private Person assignee;
+        public Person assignee;
 
-        public Todo()
+        public string Description
         {
-
+            get { return description; }
+            set
+            {
+               if ((!String.IsNullOrWhiteSpace(description) || description.Length < 2))
+                {
+                    throw new ArgumentException("Invalid Data found!!!");
+               }
+               description = value;
+            }
         }
         public bool Done
         {
             get { return done; }
         }
 
-        public Todo(int id, string description)        {
-            if (id < 1)
-            {
-                throw new ArgumentOutOfRangeException("The ToDo ID should not be less than 1");
-            }
+        public int Id
+        {
+            get => id;
+        }
 
+
+        public Todo()
+        { }
+        public Todo(Person assignee)
+        {
+            this.assignee = assignee;
+        }
+
+        public Todo(int id, string description)        
+        {
             this.id = id;
             this.description = description;
-
         }
-        public int Id
-        { get => id; }
-        public string Description
-        {
-            get { return description; }
-            set
-            {
-               if (string.IsNullOrWhiteSpace(value) || value.Length < 2)
-                {
-                    throw new ArgumentException("Description should not be blank.");
- //                   throw new Exception("Exception throwed");
-               }
-               description = value;
-            }
-        }
-
 
         public Todo(int id, string description, bool done)
         {
@@ -55,5 +54,14 @@ namespace TodoApp.Models
             this.id = id;
             this.description = description;
         }
+        
+        public Todo(int id, string description, bool done, Person person)
+        {
+            this.done = done;
+            this.id = id;
+            this.description = description;
+            this.assignee = person;
+        }
+
     }// End Class Todo
 }
