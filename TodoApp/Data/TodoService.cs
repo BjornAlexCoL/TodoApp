@@ -5,7 +5,7 @@ using TodoApp.Models;
 
 namespace TodoApp.Data
 {
-    class TodoService
+    public class TodoService
     {
         private static Todo[] todo = new Todo[0];
 
@@ -33,15 +33,19 @@ namespace TodoApp.Data
 
         public Todo AddTodo(string desc)
         {
-            Todo newTodo = new Todo(TodoSequencer.NextTodoId(), desc, false);
 
+            Todo newTodo = new Todo(TodoSequencer.NextTodoId(), desc, false);
+            if ((newTodo.Id! > 0))
+            {
                 Todo[] newTaskTodo = new Todo[todo.Length + 1];
                 todo.CopyTo(newTaskTodo, 0);
                 newTaskTodo[todo.Length] = newTodo;
                 todo = newTaskTodo;
-
+            }
             return newTodo;
         }
+
+
         public void Clear()
         {
             todo = new Todo[0];
@@ -49,7 +53,6 @@ namespace TodoApp.Data
 
         public Todo FindByDoneStatus(bool doneStatus)
         {
-            {
                 Todo foundToDo = new Todo();
                 foreach (Todo checkTodo in todo)
                 {
@@ -59,7 +62,21 @@ namespace TodoApp.Data
                     }
                 }
                 return foundToDo;
-            }
         }
-    }
-}
+ 
+        public Todo FindByAssignee(int personID)
+        {
+
+            Todo foundToDo = new Todo();
+            foreach (Todo checkTodo in todo)
+                {
+                    if (checkTodo.assignee.Id == personID)
+                    {
+                        foundToDo = checkTodo;
+                    }
+                }
+                return foundToDo;
+            }
+
+    }// End of Class TodoService
+}// End NameSpace
