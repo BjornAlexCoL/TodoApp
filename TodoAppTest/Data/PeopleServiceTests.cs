@@ -10,15 +10,16 @@ namespace TodoAppTest.Data
 {
     public class PeopleServiceTests
     {
+        PeopleService personList = new PeopleService();
+    
         [Theory]
         [InlineData("Björn", "Larsson", "1\tBjörn Larsson")]
-        [InlineData("Nisse", "Hult", "2\tNisse Hult")]
-        [InlineData("", "Larsson", "0\t")]
-        [InlineData("Björn", "", "0\t")]
-        public void AddPerson(string firstName, string lastName, string expected)
+        [InlineData("Nisse", "Hult", "3\tNisse Hult")]
+        [InlineData("", "Larsson", "2\t Larsson")]
+        [InlineData("Björn", "", "4\tBjörn ")]
+        public void AddPersonTest(string firstName, string lastName, string expected)
         {
             //Assign
-            PeopleService personList = new PeopleService();
             //Act
             Person addedPerson = personList.AddPerson(firstName, lastName);
             string result = $"{addedPerson.Id}\t{addedPerson.Name}";
@@ -27,18 +28,34 @@ namespace TodoAppTest.Data
             Assert.Equal(expected, result);
         }
 
+
+
+
         [Theory]
-        [InlineData("Björn", "Larsson", "1\tBjörn Larsson")]
+        [InlineData("Björn", "Larsson", 1)]
+        [InlineData("Nisse", "Hult", 2)]
+        [InlineData("", "Larsson", 3)]
+        [InlineData("Björn", "", 4)]
+        public void SizeTest(string firstName, string lastName, int expected)
+        {
+            //Assign
+            //Act
+            Person addedPerson = personList.AddPerson(firstName, lastName);
+            int result = personList.Size();
+            //Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData("Björn", "Larsson", "0\tBjörn Larsson")]
         [InlineData("Nisse", "Hult", "1\tNisse Hult")]
-        [InlineData("", "Larsson", "1\t")]
-        [InlineData("Björn", "", "1\t")]
         public void ClearTest(string firstName, string lastName, string expected)
         {
-            PeopleService personList = new PeopleService();
-            personList.clear();
+
             Person addedPerson = personList.AddPerson(firstName, lastName);
             string result = $"{addedPerson.Id}\t{addedPerson.Name}";
 
+            personList.clear();
             Assert.Equal(expected, result);
         }
     }//End Class

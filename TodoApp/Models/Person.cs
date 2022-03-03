@@ -12,7 +12,7 @@ namespace TodoApp.Models
 
         public Person(int id, string firstName, string lastName) 
         {
-            if ((!String.IsNullOrWhiteSpace(firstName)) && (!String.IsNullOrWhiteSpace(lastName)) || !(id < 0))
+            if ((!String.IsNullOrWhiteSpace(firstName)) && (!String.IsNullOrWhiteSpace(lastName)) && (!(id <= 0)))
             {
                 this.id = id;
                 this.firstName = firstName;
