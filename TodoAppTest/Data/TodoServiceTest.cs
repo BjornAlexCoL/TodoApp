@@ -71,19 +71,39 @@ namespace TodoAppTest.Data
         {
             // Assign
             TodoService todoFind = new TodoService();
-            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment" };
+            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
             List<Todo> toDoList = new List<Todo>();
+            List<Todo> foundList = new List<Todo>();
+            List<int> foundIndex = new List<int>();
+            int expected = 0;
+            int foundCount = 0;
+
+            // Because count is 5 toDoList position 0 and 2 was set to true 
             for (int i = 0; i < ListofTodoDesc.Length; i++)
             {
                 toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
+                if (i == 0 || i == 2)
+                {
+                    toDoList[i].Done= true;
+                }
             }
-// Because count is 3 but list psition begin with 0. So I use minus 2 to inline the position to last 2nd in list
-            int last2ndPosition = toDoList.Count - 2;
-            toDoList[last2ndPosition].Done = true;
             // Act
-            Todo result = todoFind.FindByDoneStatus(true);
+            for (int i = 0; i < toDoList.Count; i++)
+            {
+                if (toDoList[i].Done == true)
+                {
+                    foundList.Add(toDoList[i]);
+                    foundIndex.Add(i);
+                    expected++;
+                }
+            }
+            foundCount = foundList.Count;
             // Assert
-            Assert.Contains(toDoList[last2ndPosition].Description, result.Description);
+            Assert.Equal(expected, foundCount);
+            for (int i = 0; i < foundList.Count; i++)
+            {
+                Assert.Equal(foundList[i].Id, toDoList[foundIndex[i]].Id);
+             }
          }
 
         [Fact]
@@ -99,6 +119,10 @@ namespace TodoAppTest.Data
 
             List<Todo> toDoList = new List<Todo>();
             List<Person> personList = new List<Person>();
+            List<Todo> foundList = new List<Todo>();
+            int foundcount = 0;
+            int expected = 0;
+            Random random = new Random();
             for (int i = 0; i < ListofPersonsFirst.Length; i++)
             {
                 personList.Add(personFind.AddPerson(ListofPersonsFirst[i], ListofPersonsLast[i]));
@@ -106,12 +130,25 @@ namespace TodoAppTest.Data
             for (int i = 0; i < ListofTodoDesc.Length; i++)
             {
                 toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
-                toDoList[i].assignee = personList[i];
+                if (i == 0 || i == 2)
+                {
+                    toDoList[i].assignee = personList[random.Next(personList.Count)];
+                }
             }
             // Act
-            Todo result = todoFind.FindByAssignee(personList[2].Id);
+            for (int i = 0; i < toDoList.Count; i++)
+            {
+                if (toDoList[i].assignee != null)
+                {
+                    foundList.Add(toDoList[i]);
+                    expected++;
+                }
+            }
+            foundcount = foundList.Count;
             // Assert
-            Assert.Equal(toDoList[1].assignee, result.assignee);
+            Assert.Equal(toDoList[0].assignee, foundList[0].assignee);
+            Assert.Equal(toDoList[2].assignee, foundList[1].assignee);
+            Assert.Equal(expected, foundcount);
         }       
         
         [Fact]
@@ -185,11 +222,9 @@ namespace TodoAppTest.Data
                 }
             }
 /*
-            for (int i = 0; i < ListofTodoDesc.Length; i++)
-            {
-                if (toDoList[i].assignee != null && toDoList[i].assignee.Id > 0)
-                    toDoListAssign.Add(todoFind.AddTodo(ListofTodoDesc[i]));
-            }
+Initialise expected count in orginal (5 items)
+Remove those assigned in toDoList (3 items)
+Get latest expected count 5-2
 */
             // Act
             expectedCount = toDoList.Count;
