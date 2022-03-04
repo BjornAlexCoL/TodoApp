@@ -35,13 +35,13 @@ namespace TodoApp.Data
         {
 
             Todo newTodo = new Todo(TodoSequencer.NextTodoId(), desc, false);
-            if ((newTodo.Id! > 0))
-            {
+ //           if ((newTodo.Id! > 0))
+ //           {
                 Todo[] newTaskTodo = new Todo[todo.Length + 1];
                 todo.CopyTo(newTaskTodo, 0);
                 newTaskTodo[todo.Length] = newTodo;
                 todo = newTaskTodo;
-            }
+ //           }
             return newTodo;
         }
 
@@ -66,17 +66,41 @@ namespace TodoApp.Data
  
         public Todo FindByAssignee(int personID)
         {
-
             Todo foundToDo = new Todo();
             foreach (Todo checkTodo in todo)
+            {
+                if ((checkTodo.assignee != null) && checkTodo.assignee.Id == personID)
                 {
-                    if (checkTodo.assignee.Id == personID)
-                    {
-                        foundToDo = checkTodo;
-                    }
+                    foundToDo = checkTodo;
                 }
-                return foundToDo;
             }
+            /*
+            Todo foundToDo = new Todo();
+            Todo[] checkTodo =  FindAll();
 
+            for (int i=0; i<todo.Length; i++)
+            {
+                if (checkTodo[i].assignee.Id == personID)
+                {
+                        foundToDo = checkTodo[i];
+                }
+            }
+            */
+
+            return foundToDo;
+        }
+
+        public Todo FindByUnAssigneeTodoItems()
+        {
+            Todo foundToDo = new Todo();
+            foreach (Todo checkTodo in todo)
+            {
+                if (checkTodo.assignee==null)
+                {
+                    foundToDo = checkTodo;
+                }
+            }
+            return foundToDo;
+        }
     }// End of Class TodoService
 }// End NameSpace

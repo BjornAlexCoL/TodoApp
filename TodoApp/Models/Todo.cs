@@ -18,7 +18,7 @@ namespace TodoApp.Models
             set
             {
                if ((!String.IsNullOrWhiteSpace(description) || description.Length < 2))
-                {
+               {
                     throw new ArgumentException("Invalid Data found!!!");
                }
                description = value;
@@ -27,16 +27,30 @@ namespace TodoApp.Models
         public bool Done
         {
             get { return done; }
+            set { done = value; }
         }
 
         public int Id
         {
-            get => id;
+            get { return id; }
+            set
+            {
+                if (id < 1 || id == int.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException("ID setting is out of range!!!");
+                }
+                id = value;
+            }
         }
 
 
         public Todo()
         { }
+
+        public Todo(int id)
+        {
+            this.id = id;
+        }
         public Todo(Person assignee)
         {
             this.assignee = assignee;
