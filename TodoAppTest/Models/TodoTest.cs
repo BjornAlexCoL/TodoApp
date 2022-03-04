@@ -24,11 +24,9 @@ namespace TodoAppTest.Models
         public void BadIDTest()
         {
             // Assign
-            int id = 0;
-            string desc = "Assign Job";
-
+            int id = -1;
             // Act
-            Assert.Throws<ArgumentException>(() => new Todo(id, desc));
+            Assert.Throws<ArgumentException>(() => new Todo(id));
             // Assert
         }
 

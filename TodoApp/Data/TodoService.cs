@@ -66,17 +66,28 @@ namespace TodoApp.Data
  
         public Todo FindByAssignee(int personID)
         {
-
             Todo foundToDo = new Todo();
             foreach (Todo checkTodo in todo)
-                {
-                    if (checkTodo.assignee.Id == personID)
-                    {
-                        foundToDo = checkTodo;
-                    }
-                }
-                return foundToDo;
+            {
+               if (checkTodo.assignee.Id == personID)
+               {
+                  foundToDo = checkTodo;
+               }
             }
+            return foundToDo;
+        }
 
+        public Todo FindByUnAssigneeTodoItems()
+        {
+            Todo foundToDo = new Todo();
+            foreach (Todo checkTodo in todo)
+            {
+                if (checkTodo.assignee==null)
+                {
+                    foundToDo = checkTodo;
+                }
+            }
+            return foundToDo;
+        }
     }// End of Class TodoService
 }// End NameSpace
