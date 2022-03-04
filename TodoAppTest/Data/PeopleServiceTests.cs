@@ -10,53 +10,94 @@ namespace TodoAppTest.Data
 {
     public class PeopleServiceTests
     {
-        PeopleService personList = new PeopleService();
-    
         [Theory]
-        [InlineData("Björn", "Larsson", "1\tBjörn Larsson")]
-        [InlineData("Nisse", "Hult", "3\tNisse Hult")]
-        [InlineData("", "Larsson", "2\t Larsson")]
-        [InlineData("Björn", "", "4\tBjörn ")]
-        public void AddPersonTest(string firstName, string lastName, string expected)
+        [InlineData("Björn", "Larsson", true)]
+        [InlineData("Nisse", "Hult", true)]
+        [InlineData("Kalle", "Duva", true)]
+        [InlineData("Olle", "Svensson", true)]
+        [InlineData("", "Svensson", false)]
+        [InlineData("Olle", "", false)]
+
+        public void AddPersonTest(string firstName, string lastName, bool expected)
         {
-            //Assign
+            //assign
+            PeopleService personList = new PeopleService();
+
             //Act
-            Person addedPerson = personList.AddPerson(firstName, lastName);
-            string result = $"{addedPerson.Id}\t{addedPerson.Name}";
+            Person result = personList.AddPerson(firstName, lastName);
 
             //Assert
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result != null);
+
         }
 
 
+        [Fact]
+        public void FindAllTest()
+        {
+            int expected = 4;
+            PeopleService personList = new PeopleService();
+            Populate(personList);
 
+            int result = personList.FindAll().Length;
+            Assert.Equal(expected, result);
+        }
 
         [Theory]
-        [InlineData("Björn", "Larsson", 1)]
-        [InlineData("Nisse", "Hult", 2)]
-        [InlineData("", "Larsson", 3)]
-        [InlineData("Björn", "", 4)]
-        public void SizeTest(string firstName, string lastName, int expected)
+        [InlineData(0, false)]
+        [InlineData(1, true)]
+        [InlineData(2, true)]
+        [InlineData(3, true)]
+        [InlineData(4, true)]
+        [InlineData(5, false)]
+        public void FindByIDTest(int id, bool expected)
         {
-            //Assign
-            //Act
-            Person addedPerson = personList.AddPerson(firstName, lastName);
+            PeopleService personList = new PeopleService();
+            Populate(personList);
+            Person result = personList.FindById(id);
+
+            Assert.Equal(expected, (result != null));
+
+        }
+
+        [Fact]
+        public void SizeTest()
+        {
+            int expected = 4;
+            PeopleService personList = new PeopleService();
+            Populate(personList);
             int result = personList.Size();
             //Assert
             Assert.Equal(expected, result);
         }
 
         [Theory]
-        [InlineData("Björn", "Larsson", "0\tBjörn Larsson")]
-        [InlineData("Nisse", "Hult", "1\tNisse Hult")]
-        public void ClearTest(string firstName, string lastName, string expected)
+        [InlineData(4, 4)]
+        [InlineData(0, 0)]
+        public void ClearTest(int result, int expected)
         {
 
-            Person addedPerson = personList.AddPerson(firstName, lastName);
-            string result = $"{addedPerson.Id}\t{addedPerson.Name}";
+            PeopleService personList = new PeopleService();
+            Populate(personList);
+            if (expected == 0)
+            {
+                personList.clear();
+            }
 
-            personList.clear();
             Assert.Equal(expected, result);
+        }
+
+        private void Populate(PeopleService personList) //Clear list, reset personSequencer, Populate personlist
+        {
+            personList.clear();
+            PersonSequencer.Reset();
+            personList.AddPerson("Björn", "Larsson");
+            personList.AddPerson("Nisse", "Hult");
+            personList.AddPerson("", "Svensson");
+            personList.AddPerson("Kalle", "Duva");
+            personList.AddPerson("Olle", "Svensson");
+            personList.AddPerson("Olle", "");
+
         }
     }//End Class
 }
