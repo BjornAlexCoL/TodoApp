@@ -10,9 +10,9 @@ namespace TodoApp.Models
         private string firstName;
         private string lastName;
 
-        public Person(int id, string firstName, string lastName) 
+        public Person(int id, string firstName, string lastName) //Create Person if id,firstName and LastName populate it otherwise it's null. 
         {
-            if ((!String.IsNullOrWhiteSpace(firstName)) && (!String.IsNullOrWhiteSpace(lastName)) || !(id < 0))
+            if ((!String.IsNullOrWhiteSpace(firstName)) && (!String.IsNullOrWhiteSpace(lastName)) && (!(id <= 0)))
             {
                 this.id = id;
                 this.firstName = firstName;
@@ -20,11 +20,11 @@ namespace TodoApp.Models
             }
         }
 
-        public int Id
+        public int Id //Get id
         {
             get => id;
         }
-        public string FirstName
+        public string FirstName //Get firstName If valid lastName set it.
         {
             get => firstName;
             set
@@ -35,7 +35,7 @@ namespace TodoApp.Models
                 }
             }
         }
-        public string LastName
+        public string LastName //Get lastName If valid lastName set it.
         {
             get => lastName;
             set
@@ -47,9 +47,9 @@ namespace TodoApp.Models
             }
         }
 
-        public string Name
+        public string Name //Get full Name
         {
             get => $"{firstName} {lastName}";
-        }
+        } 
     }
 }
