@@ -109,7 +109,7 @@ namespace TodoAppTest.Data
                 toDoList[i].assignee = personList[i];
             }
             // Act
-            Todo result = todoFind.FindByAssignee(1);
+            Todo result = todoFind.FindByAssignee(personList[2].Id);
             // Assert
             Assert.Equal(toDoList[1].assignee, result.assignee);
         }       
@@ -146,6 +146,7 @@ namespace TodoAppTest.Data
         public void FindByUnAssignedTodoItems()
         {
             // Assign
+            int expectedCount = 0;
             TodoService todoFind = new TodoService();
             PeopleService personFind = new PeopleService();
             String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
@@ -163,29 +164,51 @@ namespace TodoAppTest.Data
             {
                 personList.Add(personFind.AddPerson(ListofPersonsFirst[i], ListofPersonsLast[i]));
             }
+ /*
+  * Add to toDOList with reference to ListofTodoDesc (5 items)
+  * Assign toDOList[2] to personList[4]
+  * Assign toDOList[4] to personList[1]
+  */
             for (int i = 0; i < ListofTodoDesc.Length; i++)
             {
                 toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
                 if (i == 2)
+                {
                     toDoList[i].assignee = personList[4];
-                if (i== 5)
+                    toDoListAssign.Add(toDoList[i]);
+
+                }
+                if (i == 4)
+                {
                     toDoList[i].assignee = personList[1];
+                    toDoListAssign.Add(toDoList[i]);
+                }
             }
+/*
             for (int i = 0; i < ListofTodoDesc.Length; i++)
             {
-                toDoListAssign.Add(todoFind.FindByAssignee(personList[i].Id));
+                if (toDoList[i].assignee != null && toDoList[i].assignee.Id > 0)
+                    toDoListAssign.Add(todoFind.AddTodo(ListofTodoDesc[i]));
             }
+*/
             // Act
+            expectedCount = toDoList.Count;
             // Remove from toDOList (Total 5 items) if assigned (Two assigned)
-            for (int i = 0; i < ListofTodoDesc.Length; i++)
+            for (int i = 0; i < toDoList.Count; i++)
             {
-                if (toDoList[i].Id == toDoListAssign[i].Id)
+                if (toDoList[i].assignee != null)
+                {
                     toDoList.RemoveAt(i);
+
+                }
             }
+            expectedCount = ListofTodoDesc.Length - toDoList.Count;
+            int result = toDoListAssign.Count;
             // Assert
             Assert.Null(toDoList[0].assignee);
             Assert.Null(toDoList[1].assignee);
             Assert.Null(toDoList[2].assignee);
+            Assert.Equal(expectedCount, result);
         }
     }// End of Class TodoServiceTest
 

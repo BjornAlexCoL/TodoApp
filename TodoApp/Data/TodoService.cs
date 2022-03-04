@@ -35,13 +35,13 @@ namespace TodoApp.Data
         {
 
             Todo newTodo = new Todo(TodoSequencer.NextTodoId(), desc, false);
-            if ((newTodo.Id! > 0))
-            {
+ //           if ((newTodo.Id! > 0))
+ //           {
                 Todo[] newTaskTodo = new Todo[todo.Length + 1];
                 todo.CopyTo(newTaskTodo, 0);
                 newTaskTodo[todo.Length] = newTodo;
                 todo = newTaskTodo;
-            }
+ //           }
             return newTodo;
         }
 
@@ -69,11 +69,24 @@ namespace TodoApp.Data
             Todo foundToDo = new Todo();
             foreach (Todo checkTodo in todo)
             {
-               if (checkTodo.assignee.Id == personID)
-               {
-                  foundToDo = checkTodo;
-               }
+                if ((checkTodo.assignee != null) && checkTodo.assignee.Id == personID)
+                {
+                    foundToDo = checkTodo;
+                }
             }
+            /*
+            Todo foundToDo = new Todo();
+            Todo[] checkTodo =  FindAll();
+
+            for (int i=0; i<todo.Length; i++)
+            {
+                if (checkTodo[i].assignee.Id == personID)
+                {
+                        foundToDo = checkTodo[i];
+                }
+            }
+            */
+
             return foundToDo;
         }
 
