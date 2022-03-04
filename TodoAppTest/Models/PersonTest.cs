@@ -11,7 +11,7 @@ namespace TodoAppTest.Models
 
         [Theory]
         [InlineData(1, "Björn", "Larsson", "Björn")]
-        [InlineData(1, "", "Larsson", "")]
+        [InlineData(1, "", "Larsson", null)]
         [InlineData(2, "Björn", "Larsson", "Björn")]
 
         public void PersonFirstNameTest(int id, string firstName, string lastName, string expected)
@@ -27,7 +27,7 @@ namespace TodoAppTest.Models
         }
         [Theory]
         [InlineData(1, "Björn", "Larsson", "Larsson")]
-        [InlineData(1, "Björn", "", "")]
+        [InlineData(1, "Björn", "", null)]
         [InlineData(2, "Björn", "Larsson", "Larsson")]
 
         public void PersonLastNameTest(int id, string firstName, string lastName, string expected)
@@ -45,9 +45,9 @@ namespace TodoAppTest.Models
         }
         [Theory]
         [InlineData(1, "Björn", "Larsson", "Björn Larsson")]
-        [InlineData(1, "Björn", "",  "Björn ")]
-        [InlineData(1, "", "Larsson",  " Larsson")]
-        [InlineData(2, "Björn", "Larsson", "Björn Larsson")]
+        [InlineData(1, "Björn", "", " ")]
+        [InlineData(1, "", "Larsson",  " ")]
+        [InlineData(2, "Nisse", "Hult", "Nisse Hult")]
         public void PersonNameTest(int id,string firstName,string lastName, string expected)
         {
             //Assign
