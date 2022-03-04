@@ -40,10 +40,33 @@ namespace TodoApp.Data
 
             return newPerson;
         }
+        public bool RemovePerson(int personId)
+        {
+            int index = GetIndexForPersonId(personId);
+            if (index == people.Length)
+            {
+                return false;
+            }
+            Array.Copy(people, index + 1, people, index, people.Length - index - 1);
+            Array.Resize<Person>(ref people, people.Length - 1);
+            return true;
+        }
 
         public void clear() //Flush people array
         {
             people = new Person[0];
+        }
+
+        public int GetIndexForPersonId(int personId)
+        {   
+            for(int index=0; index<people.Length; index++)
+            {
+                if (people[index].Id == personId)
+                {
+                    return index;
+                }
+            }
+            return people.Length;
         }
 
     }
