@@ -35,10 +35,6 @@ namespace TodoApp.Models
             get { return id; }
             set
             {
-                if (id < 1 || id == int.MaxValue)
-                {
-                    throw new ArgumentOutOfRangeException("ID setting is out of range!!!");
-                }
                 id = value;
             }
         }
@@ -49,6 +45,10 @@ namespace TodoApp.Models
 
         public Todo(int id)
         {
+            if (id < 1 || id == int.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException("ID setting is out of range!!!");
+            }
             this.id = id;
         }
         public Todo(Person assignee)

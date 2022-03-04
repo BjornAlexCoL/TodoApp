@@ -18,6 +18,8 @@ namespace TodoAppTest.Models
             Todo result = new Todo(id, expected);
             // Assert
             Assert.Equal(result.Description, expected);
+            Assert.NotNull(result);
+            Assert.NotEqual(0, result.Id);
         }
 
         [Fact]
@@ -26,7 +28,7 @@ namespace TodoAppTest.Models
             // Assign
             int id = -1;
             // Act
-            Assert.Throws<ArgumentException>(() => new Todo(id));
+            Assert.Throws<ArgumentOutOfRangeException> (() => new Todo(id));
             // Assert
         }
 

@@ -32,16 +32,29 @@ namespace TodoAppTest.Data
         {
             // Assign
             int expected = 0;
-            TodoService todoList = new TodoService();
-            String[] ListofTodo = new string[] { "Form Group", "Call Meeting" };
-            foreach (string desc in ListofTodo)
+            TodoService todoFind = new TodoService();
+            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment" };
+            List<Todo> toDoList = new List<Todo>();
+            foreach (string desc in ListofTodoDesc)
             {
-                Todo addedList = todoList.AddTodo(desc);
+                toDoList.Add(todoFind.AddTodo(desc));
             }
             // ACT
-                 todoList.Clear();
-            int result = todoList.Size();
+
+            toDoList.Clear();            
+            int result = toDoList.Count;
             //
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void SizeTest()
+        {
+            int expected = 6;
+            TodoService todoList = new TodoService();
+            Populate(todoList);
+            int result = todoList.Size();
+            //Assert
             Assert.Equal(expected, result);
         }
 
@@ -120,7 +133,7 @@ namespace TodoAppTest.Data
             List<Todo> toDoList = new List<Todo>();
             List<Person> personList = new List<Person>();
             List<Todo> foundList = new List<Todo>();
-            int foundcount = 0;
+
             int expected = 0;
             Random random = new Random();
             for (int i = 0; i < ListofPersonsFirst.Length; i++)
@@ -144,7 +157,7 @@ namespace TodoAppTest.Data
                     expected++;
                 }
             }
-            foundcount = foundList.Count;
+            int foundcount = foundList.Count;
             // Assert
             Assert.Equal(toDoList[0].assignee, foundList[0].assignee);
             Assert.Equal(toDoList[2].assignee, foundList[1].assignee);
@@ -245,6 +258,71 @@ Get latest expected count 5-2
             Assert.Null(toDoList[2].assignee);
             Assert.Equal(expectedCount, result);
         }
+
+
+
+        [Theory]
+        [InlineData(1, 0)]
+        [InlineData(2, 1)]
+        [InlineData(3, 2)]
+        [InlineData(4, 3)]
+        [InlineData(5, 4)]
+
+        public void GetIndexForTodoIdTest(int todoId, int expected)
+        {
+            //Assign
+            TodoService todoFind = new TodoService();
+            List<Todo> toDoList = new List<Todo>();
+            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
+            for (int i = 0; i < ListofTodoDesc.Length; i++)
+            {
+                toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
+            }
+            //Act
+            int result = todoFind.GetIndexForTodoId(todoId);
+
+            //Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(2, true)]
+        [InlineData(3, true)]
+        [InlineData(4, true)]
+        [InlineData(5, false)]
+        [InlineData(0, false)]
+        public void RemoveTodoTest(int todoId, bool expected)
+        {
+            //Assign
+            TodoService todoFind = new TodoService();
+            List<Todo> toDoList = new List<Todo>();
+            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
+            for (int i = 0; i < ListofTodoDesc.Length; i++)
+            {
+                toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
+            }
+
+            //Act
+            bool result = todoFind.RemoveTodo(todoId);
+
+            //Assert
+            Assert.Equal(expected, result);
+        }
+
+        private void Populate(TodoService toDoList) //Clear list, reset todoSequencer, Populate todolist
+        {
+            toDoList.Clear();
+            TodoSequencer.Reset();
+            toDoList.AddTodo("Form Group");
+            toDoList.AddTodo("Call Meeting");
+            toDoList.AddTodo("Start Assignment");
+            toDoList.AddTodo("WIP Meeting");
+            toDoList.AddTodo("Revise");
+            toDoList.AddTodo("Submission");
+
+        }
+
     }// End of Class TodoServiceTest
 
 }// End of NameSpace

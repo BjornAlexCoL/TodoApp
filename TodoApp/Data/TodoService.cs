@@ -35,13 +35,13 @@ namespace TodoApp.Data
         {
 
             Todo newTodo = new Todo(TodoSequencer.NextTodoId(), desc, false);
- //           if ((newTodo.Id! > 0))
- //           {
+           if ((newTodo.Id! > 0))
+           {
                 Todo[] newTaskTodo = new Todo[todo.Length + 1];
                 todo.CopyTo(newTaskTodo, 0);
                 newTaskTodo[todo.Length] = newTodo;
                 todo = newTaskTodo;
- //           }
+           }
             return newTodo;
         }
 
@@ -102,5 +102,30 @@ namespace TodoApp.Data
             }
             return foundToDo;
         }
+
+        public bool RemoveTodo(int todoId)
+        {
+            int index = GetIndexForTodoId(todoId);
+            if (index == todo.Length)
+            {
+                return false;
+            }
+            Array.Copy(todo, index + 1, todo, index, todo.Length - index - 1);
+            Array.Resize<Todo>(ref todo, todo.Length - 1);
+            return true;
+        }
+
+        public int GetIndexForTodoId(int todoId)
+        {
+            for (int index = 0; index < todo.Length; index++)
+            {
+                if (todo[index].Id == todoId)
+                {
+                    return index;
+                }
+            }
+            return todo.Length;
+        }
+
     }// End of Class TodoService
 }// End NameSpace
