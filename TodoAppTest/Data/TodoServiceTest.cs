@@ -63,7 +63,7 @@ namespace TodoAppTest.Data
             //Assert
             Assert.Equal(toDoList[1].Id, result.Id);
             Assert.Equal(toDoList[1].Description, result.Description);
-            Assert.NotNull(result1);
+            Assert.Null(result1.assignee);
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace TodoAppTest.Data
             Todo result = todoFind.FindByAssignee(personList[1].Id);
 
             // Assert
-            Assert.Equal(toDoList[1].Id, result.Id);
+            Assert.Equal(toDoList[1].assignee, result.assignee);
         }
 
         [Fact]
