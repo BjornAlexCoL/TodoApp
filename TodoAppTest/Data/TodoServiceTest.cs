@@ -261,28 +261,25 @@ Get latest expected count 5-2
 
 
 
-        [Theory]
-        [InlineData(1, 0)]
-        [InlineData(2, 1)]
-        [InlineData(3, 2)]
-        [InlineData(4, 3)]
-        [InlineData(5, 4)]
-
-        public void GetIndexForTodoIdTest(int todoId, int expected)
+        [Fact]
+        public void GetIndexForTodoIdTest()
         {
             //Assign
             TodoService todoFind = new TodoService();
             List<Todo> toDoList = new List<Todo>();
-            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
+            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Revise", "Submit Report" };
             for (int i = 0; i < ListofTodoDesc.Length; i++)
             {
                 toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
             }
             //Act
-            int result = todoFind.GetIndexForTodoId(todoId);
-
             //Assert
-            Assert.Equal(expected, result);
+            for (int i = 0; i < toDoList.Count; i++)
+            {
+                int result = todoFind.GetIndexForTodoId(toDoList[i].Id);
+                int expected = i;
+                Assert.Equal(expected, result);
+            }
         }
 
         [Theory]
@@ -293,21 +290,18 @@ Get latest expected count 5-2
         [InlineData(5, false)]
         [InlineData(0, false)]
         public void RemoveTodoTest(int todoId, bool expected)
+
         {
             //Assign
-            TodoService todoFind = new TodoService();
-            List<Todo> toDoList = new List<Todo>();
-            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
-            for (int i = 0; i < ListofTodoDesc.Length; i++)
-            {
-                toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
-            }
-
-            //Act
-            bool result = todoFind.RemoveTodo(todoId);
-
+ 
+            TodoService todoList = new TodoService();
+            Populate(todoList);
+            // Act
+            bool result = todoList.RemoveTodo(todoId);
             //Assert
-            Assert.Equal(expected, result);
+
+                Assert.Equal(expected, result);
+
         }
 
         private void Populate(TodoService toDoList) //Clear list, reset todoSequencer, Populate todolist

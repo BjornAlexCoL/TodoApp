@@ -124,7 +124,10 @@ namespace TodoApp.Data
                     return index;
                 }
             }
-            return todo.Length;
+            //           return todo.Length;
+            throw new ArgumentOutOfRangeException(
+                nameof(todo),
+                $"ID {todo} is not supported");
         }
 
     }// End of Class TodoService
