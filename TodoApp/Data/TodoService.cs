@@ -110,9 +110,20 @@ namespace TodoApp.Data
             {
                 return false;
             }
+            // Array.Copy (Source, Source.positiion, target, target.position, number of copies)
             Array.Copy(todo, index + 1, todo, index, todo.Length - index - 1);
             Array.Resize<Todo>(ref todo, todo.Length - 1);
             return true;
+        }
+        public void RemoveTodoReturnTODO(int todoId)
+        {
+            int index = GetIndexForTodoId(todoId);
+            if (index != todo.Length)
+            {
+                // Array.Copy (Source, Source.positiion, target, target.position, number of copies)
+                Array.Copy(todo, index + 1, todo, index, todo.Length - index - 1);
+                Array.Resize<Todo>(ref todo, todo.Length - 1);
+            }
         }
 
         public int GetIndexForTodoId(int todoId)

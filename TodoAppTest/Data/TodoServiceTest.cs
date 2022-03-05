@@ -282,26 +282,38 @@ Get latest expected count 5-2
             }
         }
 
-        [Theory]
-        [InlineData(1, true)]
-        [InlineData(2, true)]
-        [InlineData(3, true)]
-        [InlineData(4, true)]
-        [InlineData(5, false)]
-        [InlineData(0, false)]
-        public void RemoveTodoTest(int todoId, bool expected)
-
+        [Fact]
+        public void RemoveTodo2Test()
         {
-            //Assign
- 
-            TodoService todoList = new TodoService();
-            Populate(todoList);
+            // Assign
+            TodoService todoFind = new TodoService();
+            String[] ListofTodoDesc = new string[] { "Form Group", "Call Meeting", "Start Assignment", "WIP Meeting", "Submit Report" };
+            List<Todo> toDoList = new List<Todo>();
+            List<Todo> finalList = new List<Todo>();
+            int foundCount = 0;
+
+            // Because count is 5 toDoList position 0 and 2 was set to true 
+            for (int i = 0; i < ListofTodoDesc.Length; i++)
+            {
+                toDoList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
+            }
+
             // Act
-            bool result = todoList.RemoveTodo(todoId);
-            //Assert
-
-                Assert.Equal(expected, result);
-
+            for (int i = 0; i < toDoList.Count; i++)
+            {
+                if (i == 0 || i == 4)
+                {
+                    todoFind.RemoveTodoReturnTODO(toDoList[i].Id);
+                } 
+                else
+                {
+                    finalList.Add(todoFind.AddTodo(ListofTodoDesc[i]));
+                    foundCount++;
+                }
+            }
+            int expectedCount = finalList.Count;
+            // Assert
+            Assert.Equal(expectedCount, foundCount);
         }
 
         private void Populate(TodoService toDoList) //Clear list, reset todoSequencer, Populate todolist
