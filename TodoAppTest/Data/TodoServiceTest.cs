@@ -283,7 +283,7 @@ Get latest expected count 5-2
         }
 
         [Fact]
-        public void RemoveTodo2Test()
+        public void RemoveTodoTest()
         {
             // Assign
             TodoService todoFind = new TodoService();
@@ -303,7 +303,7 @@ Get latest expected count 5-2
             {
                 if (i == 0 || i == 4)
                 {
-                    todoFind.RemoveTodoReturnTODO(toDoList[i].Id);
+                    todoFind.RemoveTodo(toDoList[i].Id);
                 } 
                 else
                 {

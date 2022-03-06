@@ -103,7 +103,7 @@ namespace TodoApp.Data
             return foundToDo;
         }
 
-        public bool RemoveTodo(int todoId)
+        public bool RemoveTodoOLD(int todoId)
         {
             int index = GetIndexForTodoId(todoId);
             if (index == todo.Length)
@@ -115,7 +115,7 @@ namespace TodoApp.Data
             Array.Resize<Todo>(ref todo, todo.Length - 1);
             return true;
         }
-        public void RemoveTodoReturnTODO(int todoId)
+        public void RemoveTodo(int todoId)
         {
             int index = GetIndexForTodoId(todoId);
             if (index != todo.Length)
