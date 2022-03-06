@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using TodoApp.Models;
 using Xunit;
-
 namespace TodoAppTest.Models
 {
     public class TodoTest
@@ -33,13 +32,13 @@ namespace TodoAppTest.Models
         }
 
         [Fact]
-            public void BadDescriptionTest()
+        public void BadDescriptionTest()
         {
-            // Assign
-            int id = 1;
-            string desc = " ";
+        // Assign
+           int id = 1;
+           string desc = " ";
 
-            // Act
+        // Act
             Assert.Throws<ArgumentException>(() => new Todo(id, desc));
             // Assert
         }
@@ -47,3 +46,4 @@ namespace TodoAppTest.Models
 
     }// End of TodoTest Class
 }// End of NameSpace
+
