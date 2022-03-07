@@ -51,29 +51,30 @@ namespace TodoApp.Data
             todo = new Todo[0];
         }
 
-        public Todo FindByDoneStatus(bool doneStatus)
+        public Todo[] FindByDoneStatus(bool doneStatus)
         {
-                Todo foundToDo = new Todo();
+            List<Todo> foundTodo = new List<Todo>();
                 foreach (Todo checkTodo in todo)
                 {
                     if (checkTodo.Done == doneStatus)
                     {
-                        foundToDo = checkTodo;
+                        foundTodo.Add(checkTodo);
                     }
                 }
-                return foundToDo;
+                return foundTodo.ToArray();
         }
  
-        public Todo FindByAssignee(int personID)
+        public Todo[] FindByAssignee(int personId)
         {
-            Todo foundToDo = new Todo();
+            List<Todo> foundTodo = new List<Todo>();
             foreach (Todo checkTodo in todo)
             {
-                if ((checkTodo.assignee != null) && checkTodo.assignee.Id == personID)
+                if ((checkTodo.assignee.Id == personId))
                 {
-                    foundToDo = checkTodo;
+                    foundTodo.Add(checkTodo);
                 }
             }
+            return foundTodo.ToArray();
             /*
             Todo foundToDo = new Todo();
             Todo[] checkTodo =  FindAll();
@@ -86,21 +87,26 @@ namespace TodoApp.Data
                 }
             }
             */
-
-            return foundToDo;
         }
-
-        public Todo FindByUnAssigneeTodoItems()
+        public Todo[] FindByAssignee(Person findPerson)
+        { 
+            if (findPerson == null)
+            {
+                return null;
+            }
+            return FindByAssignee(findPerson.Id);
+        }
+        public Todo[] FindByUnAssigneeTodoItems()
         {
-            Todo foundToDo = new Todo();
+            List<Todo> foundTodo = new List<Todo>();
             foreach (Todo checkTodo in todo)
             {
                 if (checkTodo.assignee==null)
                 {
-                    foundToDo = checkTodo;
+                    foundTodo.Add(checkTodo);
                 }
             }
-            return foundToDo;
+            return foundTodo.ToArray();
         }
 
         public bool RemoveTodoOLD(int todoId)
